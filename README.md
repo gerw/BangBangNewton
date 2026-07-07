@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1264794994.svg)](https://doi.org/10.5281/zenodo.21239638)
+
 # Continuous differentiability of the signum function and Newton’s method for bang-bang control
 
 This repository contains the implementation of the two variants of Newton's
@@ -32,7 +34,7 @@ If you find this helpful, please cite the paper and the source code as
     author = {Daniel Wachsmuth and Gerd Wachsmuth},
     title = {Continuous differentiability of the signum function and Newton's method for bang-bang control},
     year = {2026},
-    doi = {10.5281/zenodo.XXXXXXXX}
+    doi = {10.5281/zenodo.21239638}
 }
 ```
 
