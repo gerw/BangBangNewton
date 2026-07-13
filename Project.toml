@@ -1,0 +1,8 @@
+authors = ["Gerd Wachsmuth <gerd.wachsmuth@b-tu.de>"]
+version = "0.1.0"
+
+[deps]
+BangBangSolver = "c6c467d2-cbe0-43b9-9792-753fd535a842"
+FEMBundle = "88d186e3-78e4-4758-ba25-5594bf2cf1cc"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+WriteVTK = "64499a7a-5c06-52f2-abe2-ccb03c286192"

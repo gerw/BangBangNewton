@@ -2,7 +2,7 @@
 
 julia_version = "1.11.4"
 manifest_format = "2.0"
-project_hash = "264a2060cd8994977d913c057a480ec0072e69c6"
+project_hash = "d9ebd322ff9cac3983b90cfe992df081f22efe1e"
 
 [[deps.Accessors]]
 deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "MacroTools"]
@@ -80,6 +80,12 @@ version = "1.11.0"
 git-tree-sha1 = "7442a5dfe1ebb773c29cc2962a8980f47221d76c"
 uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.5"
+
+[[deps.FEMBundle]]
+deps = ["Accessors", "LinearAlgebra", "Parameters", "Printf", "SparseArrays", "StaticArrays", "Triangulate", "WriteVTK"]
+path = "../FEMBundle"
+uuid = "88d186e3-78e4-4758-ba25-5594bf2cf1cc"
+version = "0.1.0"
 
 [[deps.FillArrays]]
 deps = ["LinearAlgebra"]

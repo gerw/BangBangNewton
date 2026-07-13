@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/1264794994.svg)](https://doi.org/10.5281/zenodo.21239638)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21239638.svg)](https://doi.org/10.5281/zenodo.21239638)
 
 # Continuous differentiability of the signum function and Newton’s method for bang-bang control
 
@@ -10,8 +10,8 @@ bang-bang control" by Daniel Wachsmuth and Gerd Wachsmuth.
 To run the examples from the paper, start `julia` and use
 ```julia
 using Pkg
-Pkg.activate(".env")
-Pkg.instantiate()
+Pkg.activate(".")
+Pkg.instantiate() # Only needed once.
 
 include("paper.jl")
 solve_all_examples(3) # Solve small instances to precompile everything
