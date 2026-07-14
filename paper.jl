@@ -117,3 +117,36 @@ function solve_fixed_point(refs=5, bounds=2.7, maxiter=50)
 		@printf "%3d % e %e  % e  %e  %e % 2d\n" i newt.dual_obj newt.s.obj gap nres 0 0
 	end
 end
+
+function solve_non_bang_bang(refs=6, bounds=100., maxiter=20)
+	stype = DualSolverCG()
+	pdeinfo = LinearPDEInformation()
+
+	mesh = square_mesh(2 + refs)
+
+	yd_fun = x -> (2*sin(2*pi*(x[1]+1)/2).*cos(2*pi*x[2]) + .8*(x[2]+x[1].^2) - .5)
+	ua = -bounds
+	ub = bounds
+
+	problem = BangBangProblem(mesh, yd_fun, ua, ub, pdeinfo)
+	newt = NewtonSolver(problem, stype)
+	init!( newt, true )
+
+	mkpath("solutions_paper")
+	name = @sprintf "solutions_paper/sol_nbb_%02d_%03d.pvd" refs bounds
+
+	paraview_collection(name) do pvd
+		t = @elapsed while iter!( newt ) == false && newt.iter < maxiter
+			pvd_append( pvd, newt.iter, newt.problem.mesh, ["p" => newt.p, "xi" => newt.xi, "y" => newt.s.y, "yd" => problem.yd])
+		end
+
+		if newt.iter >= maxiter
+			println("Solver did not converge in ", maxiter, " iterations.")
+		end
+
+		@printf "\nNumber of system solves: %d\n" problem.n_system_solves
+		@printf "Time: %f\n" t
+	end
+
+	nothing
+end
