@@ -6,7 +6,7 @@ using Printf
 using StaticArrays
 using WriteVTK
 
-function solve_example(refs = 7; stype::SType = DualSolverCG(), pdeinfo = LinearPDEInformation(), bounds = 57.) where SType
+function square_mesh(refs)
 	# Setup the mesh
 	vertices = [-1. 1.; 1. 1.; 1. -1.; -1. -1.]
 	p = Vector{SVector{2,Float64}}(undef, 4)
@@ -19,8 +19,6 @@ function solve_example(refs = 7; stype::SType = DualSolverCG(), pdeinfo = Linear
 
 	t[1] = @SVector[1, 2, 3]
 	t[2] = @SVector[1, 3, 4]
-	#= t[1] = @SVector[1, 2, 4]
-	t[2] = @SVector[2, 3, 4] =#
 
 	be = [1 2; 2 3; 3 4; 4 1]'
 	segments = ones(4)
@@ -28,9 +26,15 @@ function solve_example(refs = 7; stype::SType = DualSolverCG(), pdeinfo = Linear
 	mesh = Mesh(vertices, p, be, t, segments)
 
 	# Initial refinements
-	for i=1:3
+	for i=1:refs
 		mesh = refine_all_cells(mesh)
 	end
+
+	return mesh
+end
+
+function solve_example(refs = 7; stype::SType = DualSolverCG(), pdeinfo = LinearPDEInformation(), bounds = 57.) where SType
+	mesh = square_mesh(3)
 
 	yd_fun = x -> (2*sin(2*pi*(x[1]+1)/2).*cos(2*pi*x[2]) + .8*(x[2]+x[1].^2) - .5)
 	ua = -bounds
@@ -91,30 +95,7 @@ function solve_all_examples(refs=7)
 end
 
 function solve_fixed_point(refs=5, bounds=2.7, maxiter=50)
-	# Setup the mesh
-	vertices = [-1. 1.; 1. 1.; 1. -1.; -1. -1.]
-	p = Vector{SVector{2,Float64}}(undef, 4)
-	t = Vector{SVector{3,Int}}(undef, 2)
-
-	p[1] = @SVector[-1.,  1.]
-	p[2] = @SVector[ 1.,  1.]
-	p[3] = @SVector[ 1., -1.]
-	p[4] = @SVector[-1., -1.]
-
-	t[1] = @SVector[1, 2, 3]
-	t[2] = @SVector[1, 3, 4]
-	#= t[1] = @SVector[1, 2, 4]
-	t[2] = @SVector[2, 3, 4] =#
-
-	be = [1 2; 2 3; 3 4; 4 1]'
-	segments = ones(4)
-
-	mesh = Mesh(vertices, p, be, t, segments)
-
-	# Initial refinements
-	for i=1:2+refs
-		mesh = refine_all_cells(mesh)
-	end
+	mesh = square_mesh(2+refs)
 
 	yd_fun = x -> (2*sin(2*pi*(x[1]+1)/2).*cos(2*pi*x[2]) + .8*(x[2]+x[1].^2) - .5)
 	ua = -bounds
